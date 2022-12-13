@@ -1,39 +1,43 @@
-import { homedir } from "os";
-import { join } from "path";
-import { promises } from "fs";
+import { homedir } from 'os';
+import { join } from 'path';
+import { promises } from 'fs';
 
-const filePath = join(homedir(), "weather-data.json");
+const filePath = join(homedir(), 'weather-data.json');
+
+export const TOKEN_DICTIONARY = {
+    token: 'token',
+    city: 'city',
+};
 
 async function saveKeyValue(key, value) {
-  let data = {};
+    let data = {};
 
-  if (await isExsist(filePath)) {
-    const file = await promises.readFile(filePath);
-    data = JSON.parse(file);
-  }
-  data[key] = value;
+    if (await isExsist(filePath)) {
+        const file = await promises.readFile(filePath);
+        data = JSON.parse(file);
+    }
+    data[key] = value;
 
-  await promises.writeFile(filePath, JSON.stringify(data), (err) => {});
-
-  console.log(filePath);
+    await promises.writeFile(filePath, JSON.stringify(data), (err) => {});
 }
 
 async function getKeyValue(key) {
-  if (await isExsist(filePath)) {
-    const file = promises.readFile(filePath);
-    data = JSON.parse(file);
-    return data[key];
-  }
-  return null;
+    if (await isExsist(filePath)) {
+        let data = {};
+        const file = await promises.readFile(filePath);
+        data = JSON.parse(file);
+        return data[key];
+    }
+    return null;
 }
 
 async function isExsist(path) {
-  try {
-    await promises.access(path);
-    return true;
-  } catch (err) {
-    return false;
-  }
+    try {
+        await promises.access(path);
+        return true;
+    } catch (err) {
+        return false;
+    }
 }
 
 export { getKeyValue, saveKeyValue };
