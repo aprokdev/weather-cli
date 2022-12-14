@@ -24,3 +24,49 @@ export function printHelp(message) {
         )
     );
 }
+
+function getIcon(icon) {
+    switch(icon.slice(0, -1)) {
+        case '01': 
+            return '☀️';
+        case '02': 
+            return '⛅';
+        case '03': 
+            return '☁️';
+        case '04': 
+            return '☁️';
+        case '09': 
+            return '🌦️';
+        case '10': 
+            return '🌦️';
+        case '11': 
+            return '☔';
+        case '13': 
+            return '❄️';
+        case '50': 
+            return '🌫️';
+        default: 
+            return '';
+    }
+}
+
+export function printWeather(data) {
+    console.log(
+        dedent(
+            `
+        ================================
+
+        ${chalk.bgCyan(` ${data.name} `)} today's weather: ${data.weather[0].description} ${getIcon(data.weather[0].icon)}
+        
+        🌡️ Temperature:  min: ${data?.main?.temp_min}℃
+                        max: ${data?.main?.temp_max}℃
+        🌡️ Feels like: ${data?.main?.feels_like}℃
+
+        🌄 Sunrise at: ${new Date(data?.sys?.sunrise).toLocaleTimeString()}
+        🌇 Sunset at: ${new Date(data?.sys?.sunset).toLocaleTimeString()}
+
+        ================================
+        `
+        )
+    );
+}

@@ -1,10 +1,10 @@
-import https from 'https';
+// import https from 'https';
 import { printError } from './log.service.js';
-import { getKeyValue, TOKEN_DICTIONARY } from './storage.service.js';
+import { getKeyValue, STORAGE } from './storage.service.js';
 import axios from 'axios';
 
 export async function getWeather(city) {
-    const token = await getKeyValue(TOKEN_DICTIONARY.token);
+    const token = await getKeyValue(STORAGE.token);
     if (!token) {
         printError('Token was not passed, please pass it with -t flag: -t [API_KEY]');
         return;
@@ -15,14 +15,12 @@ export async function getWeather(city) {
             params: {
                 q: city,
                 appid: token,
-                lang: 'ru',
+                lang: 'en',
                 units: 'metric',
             },
         });
-        console.log(data);
         return data;
     } catch (err) {
-        console.log(err.response)
         if (err.response.status === 404) {
             printError('Wrong city');
             return;

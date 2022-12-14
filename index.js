@@ -1,33 +1,51 @@
-#!usr/bin/env node
+#!/usr/bin/env node
 
 import parseArgs from './helpers/parseArgs.js';
 import { getWeather } from './services/api.service.js';
-import { printHelp, printSuccess, printError } from './services/log.service.js';
-import { saveKeyValue, TOKEN_DICTIONARY } from './services/storage.service.js';
+import { printHelp, printSuccess, printError, printWeather } from './services/log.service.js';
+import { saveKeyValue, getKeyValue, STORAGE } from './services/storage.service.js';
 
 async function saveToken(token) {
     if (!token.length) {
         printError('Token was not given');
         return;
     }
-
     try {
-        await saveKeyValue(TOKEN_DICTIONARY.token, token);
+        await saveKeyValue(STORAGE.token, token);
         printSuccess('Token is saved');
     } catch (error) {
         printError(error.message);
     }
 }
 
-const args = parseArgs(process.argv);
-if (args.h) {
-    printHelp();
+async function saveCity(city) {
+    if (!city.length) {
+        printError(`City ${city[0].toUpperCase()}${city.slice(1)} was not given`);
+        return;
+    }
+    try {
+        await saveKeyValue(STORAGE.city, city);
+        printSuccess(`City ${city[0].toUpperCase()}${city.slice(1)} is saved`);
+    } catch (error) {
+        printError(error.message);
+    }
 }
-if (args.t) {
-    await saveToken(args.t);
+
+async function main() {
+    const args = parseArgs(process.argv);
+    if (args.h) {
+        return printHelp();
+    }
+    if (args.c) {
+        return saveCity(args.c);
+    }
+    if (args.t) {
+        return saveToken(args.t);
+    }
+    const cachedCity = await getKeyValue(STORAGE.city);
+    if (!cachedCity && !args.c) printError('There is no saved city');
+    const data = await getWeather(args.c ||cachedCity);
+    return printWeather(data);
 }
-getWeather('moscow');
-// console.log(process.env)
-// if (args.h) {
-//   printHelp();
-// }
+
+main();
