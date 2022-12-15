@@ -3,10 +3,15 @@ import { printError } from './log.service.js';
 import { getKeyValue, STORAGE } from './storage.service.js';
 import axios from 'axios';
 
-export async function getWeather(city) {
+export async function getWeather() {
     const token = await getKeyValue(STORAGE.token);
+    const city = await getKeyValue(STORAGE.city);
     if (!token) {
         printError('Token was not passed, please pass it with -t flag: -t [API_KEY]');
+        return;
+    }
+    if (!city) {
+        printError('City was not passed, please pass it with -c flag: -c [CITY_NAME]');
         return;
     }
 

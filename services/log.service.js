@@ -26,26 +26,26 @@ export function printHelp(message) {
 }
 
 function getIcon(icon) {
-    switch(icon.slice(0, -1)) {
-        case '01': 
+    switch (icon.slice(0, -1)) {
+        case '01':
             return '☀️';
-        case '02': 
+        case '02':
             return '⛅';
-        case '03': 
+        case '03':
             return '☁️';
-        case '04': 
+        case '04':
             return '☁️';
-        case '09': 
+        case '09':
             return '🌦️';
-        case '10': 
+        case '10':
             return '🌦️';
-        case '11': 
+        case '11':
             return '☔';
-        case '13': 
+        case '13':
             return '❄️';
-        case '50': 
+        case '50':
             return '🌫️';
-        default: 
+        default:
             return '';
     }
 }
@@ -56,7 +56,9 @@ export function printWeather(data) {
             `
         ================================
 
-        ${chalk.bgCyan(` ${data.name} `)} today's weather: ${data.weather[0].description} ${getIcon(data.weather[0].icon)}
+        ${chalk.bgCyan(` ${data.name} `)} today's weather: ${data.weather[0].description} ${getIcon(
+                data.weather[0].icon
+            )}
         
         🌡️ Temperature:  min: ${data?.main?.temp_min}℃
                         max: ${data?.main?.temp_max}℃

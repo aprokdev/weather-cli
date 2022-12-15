@@ -4,7 +4,8 @@ How to start:
 
 Install package globally by running `npm i weather-cli-aprokdev -g`,
 
-Use flags `-t` and `-c`, to set city and OpenWeather API token, like:
+Use flags `-c` and `-t`, to set city and OpenWeather API token, like:
+
 ```
 weather -c donetsk
 

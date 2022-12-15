@@ -42,10 +42,14 @@ async function main() {
     if (args.t) {
         return saveToken(args.t);
     }
-    const cachedCity = await getKeyValue(STORAGE.city);
-    if (!cachedCity && !args.c) printError('There is no saved city');
-    const data = await getWeather(args.c ||cachedCity);
-    return printWeather(data);
+    try {
+        const data = await getWeather();
+        if (data) {
+            printWeather(data);
+        }
+    } catch (error) {
+        printError(error.message);
+    }
 }
 
 main();
