@@ -1,8 +1,6 @@
 ## weather-cli ☂️🌡️🌧️🌩️☀️
 
----
-
-This is a trainy project related to **++[this](https://www.udemy.com/course/nodejs-start/learn/lecture/28136972#overview)++** tutorial course.
+This is a trainy project related to [this](https://www.udemy.com/course/nodejs-start/learn/lecture/28136972#overview) tutorial course.
 
 It is a simple CLI app to get weather in the city based on OpenWeather API.
 
@@ -28,4 +26,4 @@ then run command:
 weather
 ```
 
-++Gotten city and token will be cached, so you have to pass new ones every time you want to change it.++
+Gotten city and token will be cached, so you have to pass new ones every time you want to change it.
